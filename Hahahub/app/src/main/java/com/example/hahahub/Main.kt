@@ -1,13 +1,15 @@
 package com.example.hahahub
 
 fun main() {
-    val shop = PetStore()
+    val store = PetStore()
 
-    // Создаем животное
-    val animal = shop.determineAnimal("хаски", 25.0, 3)
-    println(animal)  // Output: Husky(weight=25.0, age=3)
+    val husky = Husky(weight = 25.0, age = 3)
+    val corgi = Corgi(weight = 10.0, age = 2)
+    val scottishCat = ScottishCat(weight = 4.0, age = 5)
+    val siameseCat = SiameseCat(weight = 3.5, age = 4)
 
-    // Получаем породу по классу
-    val breed = shop.getBreed(animal)
-    println("Порода: $breed")  // Output: Порода: хаски
+    println("${husky::class.simpleName} - ${store.determineAnimalType(husky)}")
+    println("${corgi::class.simpleName} - ${store.determineAnimalType(corgi)}")
+    println("${scottishCat::class.simpleName} - ${store.determineAnimalType(scottishCat)}")
+    println("${siameseCat::class.simpleName} - ${store.determineAnimalType(siameseCat)}")
 }

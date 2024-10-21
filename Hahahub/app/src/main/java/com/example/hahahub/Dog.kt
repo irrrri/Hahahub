@@ -1,5 +1,5 @@
 package com.example.hahahub
 
-interface IDog : IAnimal {
+interface Dog : Animal {
     val biteType: BiteType
 }

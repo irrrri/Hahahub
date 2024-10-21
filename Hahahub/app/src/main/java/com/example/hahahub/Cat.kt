@@ -1,5 +1,5 @@
 package com.example.hahahub
 
-interface ICat : IAnimal {
+interface Cat : Animal {
     val behaviorType: BehaviorType
 }

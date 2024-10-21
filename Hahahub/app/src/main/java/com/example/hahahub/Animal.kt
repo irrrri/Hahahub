@@ -1,8 +1,6 @@
 package com.example.hahahub
 
-interface IAnimal {
+interface Animal {
     val weight: Double
     val age: Int
-
-    fun getFoodRecommendation(): String
 }
