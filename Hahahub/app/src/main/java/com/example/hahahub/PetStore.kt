@@ -3,9 +3,9 @@ package com.example.hahahub
 class PetStore {
     fun determineAnimalType(animal: Animal): String {
         return when (animal) {
-            is Husky, is Corgi -> "Собака"
-            is ScottishCat, is SiameseCat -> "Кошка"
-            else -> throw IllegalArgumentException("Неизвестный тип животного")
+            is Dog -> "Собака"
+            is Cat -> "Кошка"
+            else -> throw IllegalArgumentException("Неизвестный тип животного: ${animal::class.simpleName}")
         }
     }
 }
