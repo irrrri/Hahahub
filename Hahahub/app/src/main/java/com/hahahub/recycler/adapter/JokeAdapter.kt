@@ -8,6 +8,7 @@ import com.example.hahahub.databinding.JokeItemBinding
 import com.hahahub.data.Joke
 import com.hahahub.recycler.JokeViewHolder
 import com.hahahub.recycler.util.JokeDiffUtilCallback
+import android.os.Bundle
 
 class JokeAdapter: RecyclerView.Adapter<JokeViewHolder>() {
 
@@ -30,5 +31,20 @@ class JokeAdapter: RecyclerView.Adapter<JokeViewHolder>() {
 
     override fun onBindViewHolder(holder: JokeViewHolder, position: Int) {
         holder.bind(data[position])
+    }
+
+    override fun onBindViewHolder(holder: JokeViewHolder, position: Int, payloads: MutableList<Any>) {
+        if (payloads.isNotEmpty()) {
+            val diffBundle = payloads[0] as Bundle
+            diffBundle.keySet().forEach { key ->
+                when (key) {
+                    "category" -> holder.binding.jokeCategory.text = diffBundle.getString("category")
+                    "question" -> holder.binding.jokeQuestion.text = diffBundle.getString("question")
+                    "answer" -> holder.binding.jokeAnswer.text = diffBundle.getString("answer")
+                }
+            }
+        } else {
+            holder.bind(data[position])
+        }
     }
 }
