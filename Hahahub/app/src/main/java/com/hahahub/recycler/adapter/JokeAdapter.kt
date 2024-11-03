@@ -22,7 +22,7 @@ class JokeAdapter: RecyclerView.Adapter<JokeViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): JokeViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val binding = JokeItemBinding.inflate(inflater)
+        val binding = JokeItemBinding.inflate(inflater, parent, false)
         return JokeViewHolder(binding)
     }
 

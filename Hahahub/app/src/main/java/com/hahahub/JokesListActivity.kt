@@ -2,7 +2,7 @@ package com.hahahub
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.hahahub.databinding.ActivityJokesListBinding
 import com.hahahub.data.Joke
 import com.hahahub.recycler.adapter.JokeAdapter
@@ -36,6 +36,6 @@ class JokesListActivity : AppCompatActivity() {
 
     private fun createRecyclerViewList() {
         binding.recyclerView.adapter = adapter
-        binding.recyclerView.layoutManager = GridLayoutManager(this, 1)
+        binding.recyclerView.layoutManager = LinearLayoutManager(this)
     }
 }
