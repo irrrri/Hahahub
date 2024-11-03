@@ -13,7 +13,10 @@
         android:theme="@style/Theme.Hahahub"
         tools:targetApi="31">
         <activity
-            android:name="com.hahahub.JokesListActivity"
+            android:name="com.hahahub.ui.joke_details.JokeDetailsActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.hahahub.ui.joke_list.JokesListActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

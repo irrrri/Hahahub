@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFE4E1"
+    android:padding="16dp">
+
+    <!-- Заголовок категории -->
+    <TextView
+        android:id="@+id/detailJokeCategory"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textSize="24sp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textColor="@android:color/black"
+        tools:text="Category: Holiday"/>
+
+    <!-- Разделитель между категорией и вопросом -->
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="20dp"
+        android:background="#B0B0B0"
+        app:layout_constraintTop_toBottomOf="@id/detailJokeCategory"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Вопрос -->
+    <TextView
+        android:id="@+id/detailJokeQuestion"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        android:layout_marginTop="24dp"
+        android:textStyle="italic"
+        android:textColor="@android:color/black"
+        android:textAlignment="center"
+        app:layout_constraintTop_toBottomOf="@id/detailJokeCategory"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="What does Santa suffer from if he gets stuck in a chimney?"/>
+
+    <!-- Разделитель между вопросом и ответом -->
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="20dp"
+        android:background="#B0B0B0"
+        app:layout_constraintTop_toBottomOf="@id/detailJokeQuestion"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Блок для ответа -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/answerCard"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:padding="20dp"
+        app:cardBackgroundColor="@android:color/holo_orange_light"
+        app:cardCornerRadius="8dp"
+        app:layout_constraintTop_toBottomOf="@id/detailJokeQuestion"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <!-- Ответ -->
+        <TextView
+            android:id="@+id/detailJokeAnswer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/holo_red_dark"
+            android:textAlignment="center"
+            tools:text="Claustrophobia!" />
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

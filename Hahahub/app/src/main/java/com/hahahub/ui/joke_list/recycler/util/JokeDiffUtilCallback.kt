@@ -1,4 +1,4 @@
-package com.hahahub.recycler.util
+package com.hahahub.ui.joke_list.recycler.util
 
 import androidx.recyclerview.widget.DiffUtil
 import com.hahahub.data.Joke

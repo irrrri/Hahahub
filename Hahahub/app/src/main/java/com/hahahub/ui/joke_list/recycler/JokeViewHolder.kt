@@ -1,4 +1,4 @@
-package com.hahahub.recycler
+package com.hahahub.ui.joke_list.recycler
 
 import androidx.recyclerview.widget.RecyclerView
 import com.example.hahahub.databinding.JokeItemBinding
