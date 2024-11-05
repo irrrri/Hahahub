@@ -45,13 +45,7 @@ class JokeAdapter(
     override fun onBindViewHolder(holder: JokeViewHolder, position: Int, payloads: MutableList<Any>) {
         if (payloads.isNotEmpty()) {
             val diffBundle = payloads[0] as Bundle
-            diffBundle.keySet().forEach { key ->
-                when (key) {
-                    "category" -> holder.binding.jokeCategory.text = diffBundle.getString("category")
-                    "question" -> holder.binding.jokeQuestion.text = diffBundle.getString("question")
-                    "answer" -> holder.binding.jokeAnswer.text = diffBundle.getString("answer")
-                }
-            }
+            holder.bind(diffBundle)
         } else {
             holder.bind(data[position])
         }

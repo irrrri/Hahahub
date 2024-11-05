@@ -3,6 +3,7 @@ package com.hahahub.ui.joke_list.recycler.util
 import androidx.recyclerview.widget.DiffUtil
 import com.hahahub.data.Joke
 import android.os.Bundle
+import com.hahahub.data.Constants
 
 class JokeDiffUtilCallback(
     private val oldList: List<Joke>,
@@ -28,13 +29,13 @@ class JokeDiffUtilCallback(
         val diffBundle = Bundle()
 
         if (oldItem.category != newItem.category) {
-            diffBundle.putString("category", newItem.category)
+            diffBundle.putString(Constants.CATEGORY_KEY, newItem.category)
         }
         if (oldItem.question != newItem.question) {
-            diffBundle.putString("question", newItem.question)
+            diffBundle.putString(Constants.QUESTION_KEY, newItem.question)
         }
         if (oldItem.answer != newItem.answer) {
-            diffBundle.putString("answer", newItem.answer)
+            diffBundle.putString(Constants.ANSWER_KEY, newItem.answer)
         }
 
         return if (diffBundle.size() == 0) null else diffBundle
