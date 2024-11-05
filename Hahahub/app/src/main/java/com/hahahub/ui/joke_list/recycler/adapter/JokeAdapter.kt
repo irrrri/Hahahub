@@ -1,7 +1,5 @@
 package com.hahahub.ui.joke_list.recycler.adapter
 
-import android.content.Context
-import android.content.DialogInterface.OnClickListener
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -11,7 +9,6 @@ import com.hahahub.data.Joke
 import com.hahahub.ui.joke_list.recycler.JokeViewHolder
 import com.hahahub.ui.joke_list.recycler.util.JokeDiffUtilCallback
 import android.os.Bundle
-import android.widget.Toast
 
 class JokeAdapter(
     private val clickListener: (Int) -> Unit
