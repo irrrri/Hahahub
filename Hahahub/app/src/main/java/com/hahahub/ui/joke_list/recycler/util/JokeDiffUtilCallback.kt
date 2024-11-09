@@ -3,7 +3,7 @@ package com.hahahub.ui.joke_list.recycler.util
 import androidx.recyclerview.widget.DiffUtil
 import com.hahahub.data.Joke
 import android.os.Bundle
-import com.hahahub.data.Constants
+import com.hahahub.ui.constants.Constants
 
 class JokeDiffUtilCallback(
     private val oldList: List<Joke>,

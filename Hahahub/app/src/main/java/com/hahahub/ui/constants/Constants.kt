@@ -1,4 +1,4 @@
-package com.hahahub.data
+package com.hahahub.ui.constants
 
 object Constants {
     const val CATEGORY_KEY = "category"
