@@ -13,15 +13,14 @@ class JokeDetailsActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityJokeDetailsBinding
 
-    private var jokePosition: Int = -1
+    private var jokeId: Int = -1
 
     companion object {
+        private const val JOKE_ID_EXTRA = "JOKE_ID"
 
-        private const val JOKE_POSITION_EXTRA = "JOKE_POSITION"
-
-        fun getInstance(context: Context, personPosition: Int): Intent {
+        fun getInstance(context: Context, jokeId: Int): Intent {
             return Intent(context, JokeDetailsActivity::class.java).apply {
-                putExtra(JOKE_POSITION_EXTRA, personPosition)
+                putExtra(JOKE_ID_EXTRA, jokeId)
             }
         }
     }
@@ -34,12 +33,12 @@ class JokeDetailsActivity : AppCompatActivity() {
     }
 
     private fun handleExtra() {
-        val jokePosition = intent.getIntExtra(JOKE_POSITION_EXTRA, -1)
+        jokeId = intent.getIntExtra(JOKE_ID_EXTRA, -1)
 
-        if (jokePosition == -1) {
+        if (jokeId == -1) {
             handleError()
         } else {
-            val joke = JokeRepository.jokes.getOrNull(jokePosition)
+            val joke = JokeRepository.jokes.find { it.id == jokeId }
 
             if (joke != null) {
                 setupJokeData(joke)
@@ -50,7 +49,7 @@ class JokeDetailsActivity : AppCompatActivity() {
     }
 
     private fun setupJokeData(joke: Joke) {
-        with (binding) {
+        with(binding) {
             detailJokeCategory.text = joke.category
             detailJokeQuestion.text = joke.question
             detailJokeAnswer.text = joke.answer
