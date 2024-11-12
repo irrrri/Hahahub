@@ -12,4 +12,8 @@ object JokeRepository {
         Joke(7, "Space", "How do you organize a space party?",
             "You planet! And make sure you have enough space for everyone to dance around the solar system.")
     )
+
+    fun findJokeById(jokeId: Int): Joke? {
+        return jokes.find { it.id == jokeId }
+    }
 }

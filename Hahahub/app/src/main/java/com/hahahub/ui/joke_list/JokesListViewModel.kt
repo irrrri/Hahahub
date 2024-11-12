@@ -1,4 +1,4 @@
-package com.hahahub.ui.joke_list.recycler
+package com.hahahub.ui.joke_list
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

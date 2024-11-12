@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.hahahub.databinding.ActivityJokesListBinding
 import com.hahahub.ui.joke_list.recycler.adapter.JokeAdapter
 import com.hahahub.ui.joke_details.JokeDetailsActivity
-import com.hahahub.ui.joke_list.recycler.JokesListViewModel
 
 class JokesListActivity : AppCompatActivity() {
 

@@ -1,5 +1,6 @@
 package com.hahahub.ui.joke_list.recycler.adapter
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -36,6 +37,15 @@ class JokeAdapter(
 
     override fun onBindViewHolder(holder: JokeViewHolder, position: Int) {
         holder.bind(data[position])
+    }
+
+    override fun onBindViewHolder(holder: JokeViewHolder, position: Int, payloads: MutableList<Any>) {
+        if (payloads.isNotEmpty()) {
+            val diffBundle = payloads[0] as Bundle
+            holder.bind(diffBundle)
+        } else {
+            holder.bind(data[position])
+        }
     }
 
     private fun handleJokeClick(position: Int) {

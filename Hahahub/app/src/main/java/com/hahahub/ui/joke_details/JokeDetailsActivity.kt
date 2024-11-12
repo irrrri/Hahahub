@@ -38,7 +38,7 @@ class JokeDetailsActivity : AppCompatActivity() {
         if (jokeId == -1) {
             handleError()
         } else {
-            val joke = JokeRepository.jokes.find { it.id == jokeId }
+            val joke = JokeRepository.findJokeById(jokeId)
 
             if (joke != null) {
                 setupJokeData(joke)

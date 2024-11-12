@@ -20,16 +20,32 @@ class JokeViewHolder(
         diffBundle.keySet().forEach { key ->
             val value = diffBundle.getString(key)
             if (value != null) {
-                setTextForView(key, value)
+                when (key) {
+                    Constants.CATEGORY_KEY -> bindCategory(value)
+                    Constants.QUESTION_KEY -> bindQuestion(value)
+                    Constants.ANSWER_KEY -> bindAnswer(value)
+                }
             }
         }
     }
 
     private fun setTextForView(key: String, value: String) {
         when (key) {
-            Constants.CATEGORY_KEY -> binding.jokeCategory.text = value
-            Constants.QUESTION_KEY -> binding.jokeQuestion.text = value
-            Constants.ANSWER_KEY -> binding.jokeAnswer.text = value
+            Constants.CATEGORY_KEY -> bindCategory(value)
+            Constants.QUESTION_KEY -> bindQuestion(value)
+            Constants.ANSWER_KEY -> bindAnswer(value)
         }
+    }
+
+    private fun bindCategory(text: String) {
+        binding.jokeCategory.text = text
+    }
+
+    private fun bindQuestion(text: String) {
+        binding.jokeQuestion.text = text
+    }
+
+    private fun bindAnswer(text: String) {
+        binding.jokeAnswer.text = text
     }
 }
