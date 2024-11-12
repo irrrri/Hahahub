@@ -4,16 +4,16 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import com.example.hahahub.databinding.ActivityJokeDetailsBinding
 import com.hahahub.data.Joke
-import com.hahahub.data.JokeRepository
 
 class JokeDetailsActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityJokeDetailsBinding
-
-    private var jokeId: Int = -1
+    private val viewModel: JokeDetailsViewModel by viewModels()
 
     companion object {
         private const val JOKE_ID_EXTRA = "JOKE_ID"
@@ -29,23 +29,23 @@ class JokeDetailsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityJokeDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        handleExtra()
+
+        observeViewModel()
+
+        val jokeId = intent.getIntExtra(JOKE_ID_EXTRA, -1)
+        viewModel.loadJoke(jokeId)
     }
 
-    private fun handleExtra() {
-        jokeId = intent.getIntExtra(JOKE_ID_EXTRA, -1)
-
-        if (jokeId == -1) {
-            handleError()
-        } else {
-            val joke = JokeRepository.findJokeById(jokeId)
-
+    private fun observeViewModel() {
+        viewModel.joke.observe(this, Observer { joke ->
             if (joke != null) {
                 setupJokeData(joke)
-            } else {
-                handleError()
             }
-        }
+        })
+
+        viewModel.errorEvent.observe(this, Observer { isError ->
+            if (isError) handleError()
+        })
     }
 
     private fun setupJokeData(joke: Joke) {
