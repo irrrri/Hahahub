@@ -11,9 +11,9 @@ class JokeViewHolder(
 ): RecyclerView.ViewHolder(binding.root) {
 
     fun bind(joke: Joke) {
-        setTextForView(Constants.CATEGORY_KEY, joke.category)
-        setTextForView(Constants.QUESTION_KEY, joke.question)
-        setTextForView(Constants.ANSWER_KEY, joke.answer)
+        bindCategory(joke.category)
+        bindQuestion(joke.question)
+        bindAnswer(joke.answer)
     }
 
     fun bind(diffBundle: Bundle) {
