@@ -1,17 +1,18 @@
-package com.hahahub.recycler.adapter
+package com.hahahub.ui.joke_list.recycler.adapter
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.hahahub.databinding.JokeItemBinding
 import com.hahahub.data.Joke
-import com.hahahub.recycler.JokeViewHolder
-import com.hahahub.recycler.util.JokeDiffUtilCallback
-import android.os.Bundle
-import com.hahahub.data.Constants
+import com.hahahub.ui.joke_list.recycler.JokeViewHolder
+import com.hahahub.ui.joke_list.recycler.util.JokeDiffUtilCallback
 
-class JokeAdapter: RecyclerView.Adapter<JokeViewHolder>() {
+class JokeAdapter(
+    private val clickListener: (Int) -> Unit
+): RecyclerView.Adapter<JokeViewHolder>() {
 
     private var data = emptyList<Joke>()
 
@@ -25,7 +26,11 @@ class JokeAdapter: RecyclerView.Adapter<JokeViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): JokeViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = JokeItemBinding.inflate(inflater, parent, false)
-        return JokeViewHolder(binding)
+        return JokeViewHolder(binding).apply {
+            binding.root.setOnClickListener {
+                handleJokeClick(adapterPosition)
+            }
+        }
     }
 
     override fun getItemCount() = data.size
@@ -40,6 +45,13 @@ class JokeAdapter: RecyclerView.Adapter<JokeViewHolder>() {
             holder.bind(diffBundle)
         } else {
             holder.bind(data[position])
+        }
+    }
+
+    private fun handleJokeClick(position: Int) {
+        if (position != RecyclerView.NO_POSITION) {
+            val item = data[position]
+            clickListener(item.id)
         }
     }
 }
