@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.hahahub.R
 import com.example.hahahub.databinding.FragmentJokesListBinding
 import com.hahahub.ui.joke_details.JokeDetailsFragment
-import com.hahahub.ui.joke_list.recycler.JokesListViewModel
 import com.hahahub.ui.joke_list.recycler.adapter.JokeAdapter
 
 class JokesListFragment : Fragment() {
