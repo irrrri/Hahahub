@@ -11,6 +11,7 @@ import com.example.hahahub.R
 import com.example.hahahub.databinding.FragmentJokesListBinding
 import com.hahahub.ui.joke_details.JokeDetailsFragment
 import com.hahahub.ui.joke_list.recycler.adapter.JokeAdapter
+import com.hahahub.ui.add_joke.AddJokeFragment
 
 class JokesListFragment : Fragment() {
 
@@ -40,8 +41,25 @@ class JokesListFragment : Fragment() {
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerView.adapter = adapter
 
+        binding.btnAddJoke.setOnClickListener {
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, AddJokeFragment())
+                .addToBackStack(null)
+                .commit()
+        }
+
+        jokesListViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+            binding.recyclerView.visibility = if (isLoading) View.GONE else View.VISIBLE
+        }
+
         jokesListViewModel.jokes.observe(viewLifecycleOwner) { jokes ->
-            adapter.setNewData(jokes)
+            if (jokes.isEmpty()) {
+                binding.emptyStateText.visibility = View.VISIBLE
+            } else {
+                binding.emptyStateText.visibility = View.GONE
+                adapter.setNewData(jokes)
+            }
         }
     }
 

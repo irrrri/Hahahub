@@ -1,7 +1,7 @@
 package com.hahahub.data
 
 object JokeRepository {
-    val jokes = listOf(
+    private val _jokes = mutableListOf(
         Joke(1, "Holiday", "What does Santa suffer from if he gets stuck in a chimney?", "Claustrophobia!"),
         Joke(2, "Animals", "Why did the scarecrow win an award?", "Because he was outstanding in his field!"),
         Joke(3, "Food", "Why don’t eggs tell jokes?", "Because they might crack up!"),
@@ -13,7 +13,16 @@ object JokeRepository {
             "You planet! And make sure you have enough space for everyone to dance around the solar system.")
     )
 
+    val jokes: List<Joke>
+        get() = _jokes
+
     fun findJokeById(jokeId: Int): Joke? {
-        return jokes.find { it.id == jokeId }
+        return _jokes.find { it.id == jokeId }
+    }
+
+    fun addJoke(category: String, question: String, answer: String) {
+        val id = jokes.size + 1
+        val newJoke = Joke(id, category, question, answer)
+        _jokes.add(newJoke)
     }
 }
