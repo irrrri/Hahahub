@@ -1,5 +1,7 @@
 package com.hahahub.data
 
+import kotlinx.coroutines.delay
+
 object JokeRepository {
     private val _jokes = mutableListOf(
         Joke(1, "Holiday", "What does Santa suffer from if he gets stuck in a chimney?", "Claustrophobia!"),
@@ -13,15 +15,24 @@ object JokeRepository {
             "You planet! And make sure you have enough space for everyone to dance around the solar system.")
     )
 
-    val jokes: List<Joke>
-        get() = _jokes
+    suspend fun getJokes(): List<Joke> {
+        delay(1000)
+        return _jokes
+    }
 
-    fun findJokeById(jokeId: Int): Joke? {
+    suspend fun findJokeById(jokeId: Int): Joke? {
+        delay(300)
         return _jokes.find { it.id == jokeId }
     }
 
-    fun addJoke(category: String, question: String, answer: String) {
-        val id = jokes.size + 1
+    suspend fun getSize(): Int {
+        delay(200)
+        return _jokes.size
+    }
+
+    suspend fun addJoke(category: String, question: String, answer: String) {
+        delay(500)
+        val id = _jokes.size + 1
         val newJoke = Joke(id, category, question, answer)
         _jokes.add(newJoke)
     }

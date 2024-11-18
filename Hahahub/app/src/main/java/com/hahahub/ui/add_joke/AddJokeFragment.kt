@@ -6,16 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import com.example.hahahub.databinding.FragmentAddJokeBinding
-import com.hahahub.ui.joke_list.JokesListViewModel
 
 class AddJokeFragment : Fragment() {
 
     private var _binding: FragmentAddJokeBinding? = null
     private val binding get() = _binding!!
 
-    private val jokesListViewModel: JokesListViewModel by activityViewModels()
+    private val addJokeViewModel: AddJokeViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,10 +33,10 @@ class AddJokeFragment : Fragment() {
             val answer = binding.editAnswer.text.toString()
 
             if (category.isNotBlank() && question.isNotBlank() && answer.isNotBlank()) {
-                jokesListViewModel.addNewJoke(category, question, answer)
-
-                Toast.makeText(requireContext(), "Шутка добавлена!", Toast.LENGTH_SHORT).show()
-                requireActivity().onBackPressed()
+                addJokeViewModel.addNewJoke(category, question, answer) {
+                    Toast.makeText(requireContext(), "Шутка добавлена!", Toast.LENGTH_SHORT).show()
+                    parentFragmentManager.popBackStack()
+                }
             } else {
                 Toast.makeText(requireContext(), "Заполните все поля!", Toast.LENGTH_SHORT).show()
             }

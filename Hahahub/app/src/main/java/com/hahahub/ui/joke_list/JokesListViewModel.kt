@@ -23,15 +23,25 @@ class JokesListViewModel : ViewModel() {
     fun loadJokes() {
         _isLoading.value = true
         viewModelScope.launch {
-            delay(2000)
-            _jokes.value = JokeRepository.jokes
-            Log.d("JokesListViewModel", "Jokes received 2: ${_jokes.value}")
-            _isLoading.value = false
+            try {
+                val fetchedJokes = JokeRepository.getJokes()
+                _jokes.value = fetchedJokes
+            } catch (e: Exception) {
+                Log.e("JokesListViewModel", "Failed to load jokes: ${e.message}")
+            } finally {
+                _isLoading.value = false
+            }
         }
     }
 
     fun addNewJoke(category: String, question: String, answer: String) {
-        JokeRepository.addJoke(category, question, answer)
-        _jokes.value = JokeRepository.jokes
+        viewModelScope.launch {
+            try {
+                JokeRepository.addJoke(category, question, answer)
+                _jokes.value = JokeRepository.getJokes()
+            } catch (e: Exception) {
+                Log.e("JokesListViewModel", "Failed to add joke: ${e.message}")
+            }
+        }
     }
 }
