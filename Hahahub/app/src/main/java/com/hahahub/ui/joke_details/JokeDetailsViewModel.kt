@@ -3,8 +3,10 @@ package com.hahahub.ui.joke_details
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.hahahub.data.Joke
 import com.hahahub.data.JokeRepository
+import kotlinx.coroutines.launch
 
 class JokeDetailsViewModel : ViewModel() {
 
@@ -17,11 +19,18 @@ class JokeDetailsViewModel : ViewModel() {
     fun loadJoke(jokeId: Int) {
         if (jokeId == -1) {
             _errorEvent.value = true
-        } else {
-            val joke = JokeRepository.findJokeById(jokeId)
-            if (joke != null) {
-                _joke.value = joke
-            } else {
+            return
+        }
+
+        viewModelScope.launch {
+            try {
+                val joke = JokeRepository.findJokeById(jokeId)
+                if (joke != null) {
+                    _joke.value = joke
+                } else {
+                    _errorEvent.value = true
+                }
+            } catch (e: Exception) {
                 _errorEvent.value = true
             }
         }
