@@ -24,8 +24,24 @@ class JokesListViewModel : ViewModel() {
         _isLoading.value = true
         viewModelScope.launch {
             try {
-                val fetchedJokes = JokeRepository.getJokes()
-                _jokes.value = fetchedJokes
+                val localJokes = JokeRepository.getJokes()
+                val networkJokes = JokeRepository.getNetworkJokes()
+                _jokes.value = localJokes
+            } catch (e: Exception) {
+                Log.e("JokesListViewModel", "Failed to load jokes: ${e.message}")
+            } finally {
+                _isLoading.value = false
+            }
+        }
+    }
+
+    fun loadMoreJokes() {
+        _isLoading.value = true
+        viewModelScope.launch {
+            try {
+                val networkJokes = JokeRepository.getNetworkJokes()
+                val currentList = _jokes.value.orEmpty()
+                _jokes.value = currentList
             } catch (e: Exception) {
                 Log.e("JokesListViewModel", "Failed to load jokes: ${e.message}")
             } finally {
@@ -37,7 +53,7 @@ class JokesListViewModel : ViewModel() {
     fun addNewJoke(category: String, question: String, answer: String) {
         viewModelScope.launch {
             try {
-                JokeRepository.addJoke(category, question, answer)
+                JokeRepository.addJoke(category, question, answer, "My joke")
                 _jokes.value = JokeRepository.getJokes()
             } catch (e: Exception) {
                 Log.e("JokesListViewModel", "Failed to add joke: ${e.message}")

@@ -46,6 +46,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         tools:text="What does Santa suffer from if he gets stuck in a chimney?"/>
 
+    <!-- Источник шутки -->
+    <TextView
+        android:id="@+id/detailJokeSource"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:textColor="@android:color/black"
+        android:textAlignment="center"
+        app:layout_constraintTop_toBottomOf="@id/detailJokeQuestion"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="Source: Network"/>
+
     <!-- Разделитель между вопросом и ответом -->
     <View
         android:layout_width="0dp"

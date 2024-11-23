@@ -15,7 +15,7 @@ class AddJokeViewModel : ViewModel() {
     fun addNewJoke(category: String, question: String, answer: String) {
         viewModelScope.launch {
             try {
-                JokeRepository.addJoke(category, question, answer)
+                JokeRepository.addJoke(category, question, answer, "My joke")
                 _addJokeCompleted.value = true
             } catch (e: Exception) {
                 _addJokeCompleted.value = false

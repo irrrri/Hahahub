@@ -48,9 +48,15 @@ class JokesListFragment : Fragment() {
                 .commit()
         }
 
+        binding.btnLoadJokes.setOnClickListener {
+            jokesListViewModel.loadMoreJokes()
+        }
+
         jokesListViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
             binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
             binding.recyclerView.visibility = if (isLoading) View.GONE else View.VISIBLE
+            binding.btnLoadJokes.isEnabled = !isLoading
+            binding.btnAddJoke.isEnabled = !isLoading
         }
 
         jokesListViewModel.jokes.observe(viewLifecycleOwner) { jokes ->
