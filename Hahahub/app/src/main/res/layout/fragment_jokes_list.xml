@@ -49,16 +49,6 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
-        android:id="@+id/btn_load_jokes"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Загрузить ещё"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintVertical_bias="0.9" />
-
-    <Button
         android:id="@+id/btn_add_joke"
         android:layout_width="56dp"
         android:layout_height="56dp"

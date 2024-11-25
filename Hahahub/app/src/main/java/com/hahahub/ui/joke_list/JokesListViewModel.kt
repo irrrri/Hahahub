@@ -42,6 +42,8 @@ class JokesListViewModel : ViewModel() {
     }
 
     fun loadMoreJokes() {
+        if (isLoading.value == true) return
+
         _isLoading.value = true
         _error.value = null
         viewModelScope.launch {
@@ -54,6 +56,7 @@ class JokesListViewModel : ViewModel() {
                 Log.e("JokesListViewModel", "Failed to load jokes: ${e.message}")
             } finally {
                 _isLoading.value = false
+                println("h")
             }
         }
     }
