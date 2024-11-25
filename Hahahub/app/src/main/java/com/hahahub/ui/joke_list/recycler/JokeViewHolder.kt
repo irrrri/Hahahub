@@ -14,7 +14,7 @@ class JokeViewHolder(
         bindCategory(joke.category)
         bindQuestion(joke.question)
         bindAnswer(joke.answer)
-        bindSource(joke.source)
+        bindSource(joke.source.value)
     }
 
     fun bind(diffBundle: Bundle) {

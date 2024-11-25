@@ -48,17 +48,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         tools:text="Claustrophobia!"/>
 
-    <!-- Разделительная линия -->
-    <View
-        android:id="@+id/line"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:layout_marginTop="12dp"
-        android:background="#B0B0B0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/jokeAnswer"
-        app:layout_constraintEnd_toEndOf="parent"/>
-
     <!-- Источник шутки -->
     <TextView
         android:id="@+id/jokeSource"
@@ -69,8 +58,19 @@
         android:textColor="@android:color/darker_gray"
         android:textAlignment="center"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/line"
+        app:layout_constraintTop_toBottomOf="@id/jokeAnswer"
         app:layout_constraintEnd_toEndOf="parent"
         tools:text="Source: Network"/>
+
+    <!-- Разделительная линия -->
+    <View
+        android:id="@+id/line"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="12dp"
+        android:background="#B0B0B0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/jokeSource"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

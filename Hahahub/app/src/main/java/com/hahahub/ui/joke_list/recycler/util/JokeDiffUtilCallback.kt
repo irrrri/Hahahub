@@ -38,7 +38,7 @@ class JokeDiffUtilCallback(
             diffBundle.putString(Constants.ANSWER_KEY, newItem.answer)
         }
         if (oldItem.source != newItem.source) {
-            diffBundle.putString(Constants.SOURCE_KEY, newItem.source)
+            diffBundle.putString(Constants.SOURCE_KEY, newItem.source.value)
         }
 
         return if (diffBundle.size() == 0) null else diffBundle

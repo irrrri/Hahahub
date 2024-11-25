@@ -53,7 +53,7 @@ class JokeDetailsFragment : Fragment() {
             detailJokeCategory.text = joke.category
             detailJokeQuestion.text = joke.question
             detailJokeAnswer.text = joke.answer
-            detailJokeSource.text = joke.source
+            detailJokeSource.text = joke.source.value
         }
     }
 
