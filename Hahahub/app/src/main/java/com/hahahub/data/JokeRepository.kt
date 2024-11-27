@@ -33,9 +33,9 @@ object JokeRepository {
         return _jokes.size
     }
 
-    suspend fun addJoke(category: String, question: String, answer: String, source: JokeSource) {
-        val id = _jokes.size + 1
-        val newJoke = Joke(id, category, question, answer, source)
+    suspend fun addJoke(category: String, question: String, answer: String, source: JokeSource, id: Int? = null) {
+        val newId = id ?: (_jokes.size + 1)
+        val newJoke = Joke(newId, category, question, answer, source)
         _jokes.add(newJoke)
     }
 
@@ -43,7 +43,7 @@ object JokeRepository {
         val jokes = jokeApiClient.fetchJokes()
 
         jokes.forEach { networkJoke ->
-            addJoke(networkJoke.category, networkJoke.setup, networkJoke.delivery, JokeSource.NETWORK)
+            addJoke(networkJoke.category, networkJoke.setup, networkJoke.delivery, JokeSource.NETWORK, networkJoke.id)
         }
 
         return jokes.map { Joke(it.id, it.category, it.setup, it.delivery, JokeSource.NETWORK) }
