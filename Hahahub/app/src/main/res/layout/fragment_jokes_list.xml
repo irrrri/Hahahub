@@ -50,12 +50,11 @@
 
     <Button
         android:id="@+id/btn_add_joke"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Добавить шутку"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:text="+"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintVertical_bias="0.9" />
+        android:textSize="20sp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

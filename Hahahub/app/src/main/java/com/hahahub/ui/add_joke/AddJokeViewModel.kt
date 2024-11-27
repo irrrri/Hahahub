@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hahahub.data.JokeRepository
+import com.hahahub.data.JokeSource
 import kotlinx.coroutines.launch
 
 class AddJokeViewModel : ViewModel() {
@@ -15,7 +16,7 @@ class AddJokeViewModel : ViewModel() {
     fun addNewJoke(category: String, question: String, answer: String) {
         viewModelScope.launch {
             try {
-                JokeRepository.addJoke(category, question, answer)
+                JokeRepository.addJoke(category, question, answer, JokeSource.LOCAL)
                 _addJokeCompleted.value = true
             } catch (e: Exception) {
                 _addJokeCompleted.value = false

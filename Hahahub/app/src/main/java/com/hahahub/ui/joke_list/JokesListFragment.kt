@@ -12,6 +12,7 @@ import com.example.hahahub.databinding.FragmentJokesListBinding
 import com.hahahub.ui.joke_details.JokeDetailsFragment
 import com.hahahub.ui.joke_list.recycler.adapter.JokeAdapter
 import com.hahahub.ui.add_joke.AddJokeFragment
+import androidx.recyclerview.widget.RecyclerView
 
 class JokesListFragment : Fragment() {
 
@@ -48,9 +49,24 @@ class JokesListFragment : Fragment() {
                 .commit()
         }
 
+        binding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+
+                val layoutManager = recyclerView.layoutManager as LinearLayoutManager
+                val totalItemCount = layoutManager.itemCount
+                val lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition()
+
+                if (totalItemCount <= lastVisibleItemPosition + 5) {
+                    jokesListViewModel.loadMoreJokes()
+                }
+            }
+        })
+
         jokesListViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
             binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
             binding.recyclerView.visibility = if (isLoading) View.GONE else View.VISIBLE
+            binding.btnAddJoke.isEnabled = !isLoading
         }
 
         jokesListViewModel.jokes.observe(viewLifecycleOwner) { jokes ->

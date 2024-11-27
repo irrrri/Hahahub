@@ -14,6 +14,7 @@ class JokeViewHolder(
         bindCategory(joke.category)
         bindQuestion(joke.question)
         bindAnswer(joke.answer)
+        bindSource(joke.source.value)
     }
 
     fun bind(diffBundle: Bundle) {
@@ -24,6 +25,7 @@ class JokeViewHolder(
                     Constants.CATEGORY_KEY -> bindCategory(value)
                     Constants.QUESTION_KEY -> bindQuestion(value)
                     Constants.ANSWER_KEY -> bindAnswer(value)
+                    Constants.SOURCE_KEY -> bindSource(value)
                 }
             }
         }
@@ -34,6 +36,7 @@ class JokeViewHolder(
             Constants.CATEGORY_KEY -> bindCategory(value)
             Constants.QUESTION_KEY -> bindQuestion(value)
             Constants.ANSWER_KEY -> bindAnswer(value)
+            Constants.SOURCE_KEY -> bindSource(value)
         }
     }
 
@@ -47,5 +50,9 @@ class JokeViewHolder(
 
     private fun bindAnswer(text: String) {
         binding.jokeAnswer.text = text
+    }
+
+    private fun bindSource(text: String) {
+        binding.jokeSource.text = text
     }
 }
