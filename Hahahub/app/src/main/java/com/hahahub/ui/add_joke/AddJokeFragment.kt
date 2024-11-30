@@ -9,7 +9,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.example.hahahub.databinding.FragmentAddJokeBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class AddJokeFragment : Fragment() {
 
     private var _binding: FragmentAddJokeBinding? = null

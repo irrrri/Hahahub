@@ -1,51 +1,107 @@
 package com.hahahub.data
 
+import com.hahahub.data.db.CachedJoke
+import com.hahahub.data.db.JokeDao
+import com.hahahub.data.db.SavedJoke
 import com.hahahub.services.JokeApiClient
-import kotlinx.coroutines.delay
+import javax.inject.Inject
 
-object JokeRepository {
-    private val _jokes = mutableListOf(
-        Joke(1, "Holiday", "What does Santa suffer from if he gets stuck in a chimney?", "Claustrophobia!", JokeSource.LOCAL),
-        Joke(2, "Animals", "Why did the scarecrow win an award?", "Because he was outstanding in his field!", JokeSource.LOCAL),
-        Joke(3, "Food", "Why don’t eggs tell jokes?", "Because they might crack up!", JokeSource.LOCAL),
-        Joke(4, "Technology", "Why did the computer go to the doctor?", "Because it had a virus.", JokeSource.LOCAL),
-        Joke(5, "Music", "Why couldn’t the bicycle stand up by itself?", "It was two-tired!", JokeSource.LOCAL),
-        Joke(6, "Programming", "Why do programmers prefer dark mode?",
-            "Because light attracts bugs! Plus, it’s easier on the eyes, which is essential during long coding sessions.", JokeSource.LOCAL),
-        Joke(7, "Space", "How do you organize a space party?",
-            "You planet! And make sure you have enough space for everyone to dance around the solar system.", JokeSource.LOCAL)
-    )
-
-    private val jokeApiClient = JokeApiClient()
-
-    suspend fun getJokes(): List<Joke> {
-        delay(1000)
-        return _jokes
+class JokeRepository @Inject constructor(
+    private val jokeDao: JokeDao,
+    private val jokeApiClient: JokeApiClient
+) {
+    suspend fun getSavedJokes(): List<Joke> {
+        return jokeDao.getSavedJokes().map {
+            Joke(it.id, it.category, it.question, it.answer, JokeSource.fromValue(it.source))
+        }
     }
 
-    suspend fun findJokeById(jokeId: Int): Joke? {
-        delay(300)
-        return _jokes.find { it.id == jokeId }
+    suspend fun getCachedJokes(): List<Joke> {
+        val validTime = System.currentTimeMillis() - 24 * 60 * 60 * 1000
+        return jokeDao.getValidCachedJokes(validTime).map {
+            Joke(it.id, it.category, it.question, it.answer, JokeSource.fromValue(it.source))
+        }
     }
 
-    suspend fun getSize(): Int {
-        delay(200)
-        return _jokes.size
+    suspend fun getValidCachedJokesByTimestamp(): List<Joke> {
+        val validTime = System.currentTimeMillis() - 24 * 60 * 60 * 1000
+        return jokeDao.getValidCachedJokesByTimestamp(validTime).map {
+            Joke(it.id, it.category, it.question, it.answer, JokeSource.fromValue(it.source))
+        }
     }
 
     suspend fun addJoke(category: String, question: String, answer: String, source: JokeSource, id: Int? = null) {
-        val newId = id ?: (_jokes.size + 1)
-        val newJoke = Joke(newId, category, question, answer, source)
-        _jokes.add(newJoke)
+        val newJoke = Joke(id ?: 0, category, question, answer, source)
+        jokeDao.insertSavedJoke(
+            SavedJoke(
+                id = newJoke.id,
+                category = newJoke.category,
+                question = newJoke.question,
+                answer = newJoke.answer,
+                source = newJoke.source.value
+            )
+        )
     }
 
     suspend fun getNetworkJokes(): List<Joke> {
-        val jokes = jokeApiClient.fetchJokes()
+        return try {
+            val networkJokes = jokeApiClient.fetchJokes()
 
-        jokes.forEach { networkJoke ->
-            addJoke(networkJoke.category, networkJoke.setup, networkJoke.delivery, JokeSource.NETWORK, networkJoke.id)
+            val cachedJokes = networkJokes.map {
+                CachedJoke(
+                    id = 0,
+                    category = it.category,
+                    question = it.setup,
+                    answer = it.delivery,
+                    source = JokeSource.CACHED.value,
+                    timestamp = System.currentTimeMillis()
+                )
+            }
+            jokeDao.clearCachedJokes()
+            jokeDao.insertCachedJokes(cachedJokes)
+
+            val newJokes = getValidCachedJokesByTimestamp()
+
+            newJokes.map {
+                Joke(it.id, it.category, it.question, it.answer, JokeSource.NETWORK)
+            }
+        } catch (e: Exception) {
+            val cachedJokes = getCachedJokes()
+
+            if (cachedJokes.isNotEmpty()) {
+                cachedJokes.map {
+                    Joke(it.id, it.category, it.question, it.answer, JokeSource.CACHED)
+                }
+            } else {
+                throw Exception("No network and no cached jokes available")
+            }
+        }
+    }
+
+    suspend fun getJokes(): List<Joke> {
+        val savedJokes = getSavedJokes()
+
+        val networkOrCachedJokes = try {
+            getNetworkJokes()
+        } catch (e: Exception) {
+            println("Network unavailable, loading cached jokes")
+            emptyList()
         }
 
-        return jokes.map { Joke(it.id, it.category, it.setup, it.delivery, JokeSource.NETWORK) }
+        val cachedJokes = getCachedJokes()
+
+        return savedJokes + cachedJokes
+    }
+
+    suspend fun findJokeById(jokeId: Int): Joke? {
+        jokeDao.findSavedJokeById(jokeId)?.let {
+            return Joke(it.id, it.category, it.question, it.answer, JokeSource.fromValue(it.source))
+        }
+
+        jokeDao.findCachedJokeById(jokeId)?.let {
+            return Joke(it.id, it.category, it.question, it.answer, JokeSource.CACHED)
+        }
+
+        return null
     }
 }
