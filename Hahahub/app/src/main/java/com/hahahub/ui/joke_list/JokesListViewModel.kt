@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hahahub.data.Joke
 import com.hahahub.data.JokeRepository
-import com.hahahub.data.JokeSource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
 import javax.inject.Inject
@@ -59,19 +58,6 @@ class JokesListViewModel @Inject constructor(
                 Log.e("JokesListViewModel", "Failed to load jokes: ${e.message}")
             } finally {
                 _isLoading.value = false
-            }
-        }
-    }
-
-    fun addNewJoke(category: String, question: String, answer: String) {
-        _error.value = null
-        viewModelScope.launch {
-            try {
-                jokeRepository.addJoke(category, question, answer, JokeSource.LOCAL)
-                _jokes.value = jokeRepository.getJokes()
-            } catch (e: Exception) {
-                _error.value = "Не удалось добавить шутку: ${e.localizedMessage}"
-                Log.e("JokesListViewModel", "Failed to add joke: ${e.message}")
             }
         }
     }

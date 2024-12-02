@@ -28,9 +28,9 @@ interface JokeDao {
     @Query("DELETE FROM cached_jokes")
     suspend fun clearCachedJokes()
 
-    @Query("SELECT * FROM saved_jokes WHERE id = :jokeId LIMIT 1")
+    @Query("SELECT * FROM saved_jokes WHERE id = :jokeId")
     suspend fun findSavedJokeById(jokeId: Int): SavedJoke?
 
-    @Query("SELECT * FROM cached_jokes WHERE id = :jokeId LIMIT 1")
+    @Query("SELECT * FROM cached_jokes WHERE id = :jokeId")
     suspend fun findCachedJokeById(jokeId: Int): CachedJoke?
 }
