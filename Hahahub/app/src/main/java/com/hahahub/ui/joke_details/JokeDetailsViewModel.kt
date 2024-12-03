@@ -6,9 +6,16 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hahahub.data.Joke
 import com.hahahub.data.JokeRepository
+import com.hahahub.data.db.JokeDatabase
+import com.hahahub.services.JokeApiClient
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class JokeDetailsViewModel : ViewModel() {
+@HiltViewModel
+class JokeDetailsViewModel @Inject constructor(
+    private val jokeRepository: JokeRepository
+) : ViewModel() {
 
     private val _joke = MutableLiveData<Joke?>()
     val joke: LiveData<Joke?> get() = _joke
@@ -24,7 +31,7 @@ class JokeDetailsViewModel : ViewModel() {
 
         viewModelScope.launch {
             try {
-                val joke = JokeRepository.findJokeById(jokeId)
+                val joke = jokeRepository.findJokeById(jokeId)
                 if (joke != null) {
                     _joke.value = joke
                 } else {

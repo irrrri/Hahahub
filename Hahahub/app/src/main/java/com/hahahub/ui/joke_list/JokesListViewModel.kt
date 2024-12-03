@@ -7,10 +7,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hahahub.data.Joke
 import com.hahahub.data.JokeRepository
-import com.hahahub.data.JokeSource
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
+import javax.inject.Inject
 
-class JokesListViewModel : ViewModel() {
+@HiltViewModel
+class JokesListViewModel @Inject constructor(
+    private val jokeRepository: JokeRepository
+) : ViewModel() {
     private val _jokes = MutableLiveData<List<Joke>>()
     val jokes: LiveData<List<Joke>> get() = _jokes
 
@@ -29,9 +33,7 @@ class JokesListViewModel : ViewModel() {
         _error.value = null
         viewModelScope.launch {
             try {
-                val localJokes = JokeRepository.getJokes()
-                val networkJokes = JokeRepository.getNetworkJokes()
-                _jokes.value = localJokes
+                _jokes.value = jokeRepository.getJokes()
             } catch (e: Exception) {
                 _error.value = "Не удалось загрузить шутки: ${e.localizedMessage}"
                 Log.e("JokesListViewModel", "Failed to load jokes: ${e.message}")
@@ -48,29 +50,16 @@ class JokesListViewModel : ViewModel() {
         _error.value = null
         viewModelScope.launch {
             try {
-                val networkJokes = JokeRepository.getNetworkJokes()
+                val networkJokes = jokeRepository.getNetworkJokes()
                 val currentList = _jokes.value.orEmpty()
-                _jokes.value = currentList
+                _jokes.value = currentList + networkJokes
             } catch (e: Exception) {
                 _error.value = "Не удалось загрузить дополнительные шутки: ${e.localizedMessage}"
                 Log.e("JokesListViewModel", "Failed to load jokes: ${e.message}")
             } finally {
                 _isLoading.value = false
-                println("h")
-            }
-        }
-    }
-
-    fun addNewJoke(category: String, question: String, answer: String) {
-        _error.value = null
-        viewModelScope.launch {
-            try {
-                JokeRepository.addJoke(category, question, answer, JokeSource.LOCAL)
-                _jokes.value = JokeRepository.getJokes()
-            } catch (e: Exception) {
-                _error.value = "Не удалось добавить шутку: ${e.localizedMessage}"
-                Log.e("JokesListViewModel", "Failed to add joke: ${e.message}")
             }
         }
     }
 }
+
