@@ -1,11 +1,14 @@
 package com.hahahub.startup
 
 import android.app.Application
-import dagger.hilt.android.HiltAndroidApp
+import com.hahahub.di.AppComponent
 
-@HiltAndroidApp
 class App : Application() {
+
+    lateinit var appComponent: AppComponent
+
     override fun onCreate() {
         super.onCreate()
     }
 }
+

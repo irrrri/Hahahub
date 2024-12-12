@@ -13,9 +13,7 @@ import com.hahahub.presentation.ui.joke_details.JokeDetailsFragment
 import com.hahahub.presentation.ui.joke_list.recycler.adapter.JokeAdapter
 import com.hahahub.presentation.ui.add_joke.AddJokeFragment
 import androidx.recyclerview.widget.RecyclerView
-import dagger.hilt.android.AndroidEntryPoint
 
-@AndroidEntryPoint
 class JokesListFragment : Fragment() {
 
     private var _binding: FragmentJokesListBinding? = null
