@@ -6,11 +6,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hahahub.data.repositories.JokeRepositoryImpl
 import com.hahahub.domain.models.JokeSource
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-@HiltViewModel
 class AddJokeViewModel @Inject constructor(
     private val jokeRepository: JokeRepositoryImpl
 ): ViewModel() {
