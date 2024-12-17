@@ -1,8 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    kotlin("kapt")
-    id("kotlin-kapt")
+    //kotlin("kapt")
+    //id("kotlin-kapt")
 }
 
 android {
@@ -69,13 +69,13 @@ dependencies {
     implementation("androidx.room:room-ktx:$room_version")
     annotationProcessor("androidx.room:room-compiler:$room_version")
     implementation("androidx.room:room-rxjava2:$room_version")
-    kapt("androidx.room:room-compiler:$room_version")
+    //kapt("androidx.room:room-compiler:$room_version")
 
     val dagger_version = "2.53.1"
     implementation("com.google.dagger:dagger:$dagger_version")
     annotationProcessor("com.google.dagger:dagger-compiler:$dagger_version")
 }
 
-kapt {
+/*kapt {
     correctErrorTypes = true
-}
+}*/
