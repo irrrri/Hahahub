@@ -1,4 +1,4 @@
-package com.hahahub.startup
+package com.hahahub.di
 
 import android.app.Application
 import com.hahahub.data.db.JokeDao
